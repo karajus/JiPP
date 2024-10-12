@@ -67,6 +67,7 @@ public class Main {
             System.out.println("Liczba jest parzysta.");
         } else {
             System.out.println("Liczba jest nie parzysta.");
+
         }
 
 
