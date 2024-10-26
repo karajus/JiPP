@@ -98,7 +98,7 @@ public class Exercise {
 
 
         char operator;
-        Double number1, number2, result;
+        double number1, number2, result;
 
         Scanner input = new Scanner(System.in);
         while(true) {
