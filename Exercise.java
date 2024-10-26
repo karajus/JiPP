@@ -140,8 +140,12 @@ public class Exercise {
 
             // performs division between numbers
             case '/':
-                result = number1 / number2;
-                System.out.println(number1 + " / " + number2 + " = " + result);
+                if (number2 == 0) {
+                    System.out.println("Zero devision error");
+                }else {
+                    result = number1 / number2;
+                    System.out.println(number1 + " / " + number2 + " = " + result);
+                }
                 break;
 
 //            default:
