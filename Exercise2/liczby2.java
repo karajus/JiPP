@@ -1,13 +1,10 @@
 package Exercise2;
 
-import java.util.InputMismatchException;
-import java.util.Scanner;
-
 public class liczby2 {
     public static void main(String[] args) {
-        int inputNumber1 = input("Podaj 1 liczbę: ");
-        int inputNumber2 = input("Podaj 2 liczbę: ");
-        int inputNumber3 = input("Podaj 3 liczbę: ");
+        int inputNumber1 = Utilss.input("Podaj 1 liczbę: ");
+        int inputNumber2 = Utilss.input("Podaj 2 liczbę: ");
+        int inputNumber3 = Utilss.input("Podaj 3 liczbę: ");
 
         numberCompresionFunction(inputNumber1, inputNumber2, inputNumber3);
 
@@ -33,18 +30,6 @@ public class liczby2 {
         }
     }
 
-
-    static int input(String message) {
-    try {
-        System.out.println(message);
-        Scanner scanner = new Scanner(System.in);
-        return scanner.nextInt();
-    } catch (InputMismatchException e) {
-        System.out.println("Przoszę podać liczbę całkowitą");
-        return input(message);
-    }
-
-}
 }
 
 
