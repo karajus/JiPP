@@ -1,3 +1,4 @@
+import java.sql.SQLOutput;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -189,31 +190,113 @@ public class Exercise {
         //obliczamy podatek
 //        - do 85.528 podatek wynosi 18% podstawy minus 556,02 pln
         // - od 85.528 podatek wyunosi 14,839,02 + 32 % nadwyżki
-        Scanner input = new Scanner(System.in);
+//        Scanner input = new Scanner(System.in);
+//
+//        // Pobieramy dochód użytkownika
+//        System.out.print("Podaj dochód: ");
+//        double dochod = input.nextDouble();
+//
+//        // Zmienna do przechowywania wartości podatku
+//        double podatek = 0;
+//
+//        // Obliczanie podatku na podstawie podanych stawek
+//        if (dochod <= 85_528) {
+//            // Stawka 18% do 85 528 PLN
+//            podatek = dochod * 0.18 - 556.02;
+//        } else {
+//            // Stawka 32% powyżej 85 528 PLN
+//            podatek = 14_389.02 + (dochod - 85_528) * 0.32;
+//        }
+//
+//        // Wyświetlenie wyniku
+//        System.out.printf("Podatek do zapłaty: %.2f PLN\n", podatek);
+//        //(tax < 0 ? 0 : tax)
+//
+//        // Zamykamy obiekt Scanner
+//        input.close();
 
-        // Pobieramy dochód użytkownika
-        System.out.print("Podaj dochód: ");
-        double dochod = input.nextDouble();
+//         //pobierz 3 liczby i wypisz od największsej do najmnijeszej i wypisz najmnijeszą z nich
+//        try {
+//            Scanner input = new Scanner(System.in);
+//            System.out.println("Podaj 1 liczbę: ");
+//            int inputNumber1 = input.nextInt();
+//            System.out.println("Podaj 2 liczbę: ");
+//            int inputNumber2 = input.nextInt();
+//            System.out.println("Podaj 3 liczbę: ");
+//            int inputNumber3 = input.nextInt();
+//            input.close();
+//
+//            if(inputNumber1 < inputNumber2) {
+//                if (inputNumber2 < inputNumber3) {
+//                    System.out.println(inputNumber3 + ", " + inputNumber2 + ", " + inputNumber1);
+//                } else if (inputNumber3 < inputNumber1) {
+//                    System.out.println(inputNumber2 + ", " + inputNumber1 + ", " + inputNumber3);
+//                }else {
+//                    System.out.println(inputNumber2 + ", " + inputNumber3 + ", " + inputNumber1);
+//                }
+//            }else {
+//                if(inputNumber1 < inputNumber3){
+//                    System.out.println(inputNumber3 + ", " + inputNumber1 + ", " + inputNumber2);
+//                }else if (inputNumber3 < inputNumber2) {
+//                    System.out.println(inputNumber1 + ", " + inputNumber2 + ", " + inputNumber3);
+//                }else {
+//                    System.out.println(inputNumber1 + ", " + inputNumber3 + ", " + inputNumber2);
+//                }
+//
+//            }
+//
+//
+//        }catch (InputMismatchException e) {
+//            System.out.println("Proszę podac liczbę całkowitą");
+//
+//        }
+//
+//        //int max = max(max(a, b) c);
 
-        // Zmienna do przechowywania wartości podatku
-        double podatek = 0;
+//        System.out.println("Hello from main");
+//        hello();
+//        System.out.println("Hello from main");
+//        int number = hello();
+//        System.out.println(number);
 
-        // Obliczanie podatku na podstawie podanych stawek
-        if (dochod <= 85_528) {
-            // Stawka 18% do 85 528 PLN
-            podatek = dochod * 0.18 - 556.02;
-        } else {
-            // Stawka 32% powyżej 85 528 PLN
-            podatek = 14_389.02 + (dochod - 85_528) * 0.32;
+
+//        int inputNumber1 = input("Podaj 1 liczbę: ");
+//        int inputNumber2 = input("Podaj 2 liczbę: ");
+//        int inputNumber3 = input("Podaj 3 liczbę: ");
+//
+//        if(inputNumber1 < inputNumber2) {
+//                if (inputNumber2 < inputNumber3) {
+//                    System.out.println(inputNumber3 + ", " + inputNumber2 + ", " + inputNumber1);
+//                } else if (inputNumber3 < inputNumber1) {
+//                    System.out.println(inputNumber2 + ", " + inputNumber1 + ", " + inputNumber3);
+//                }else {
+//                    System.out.println(inputNumber2 + ", " + inputNumber3 + ", " + inputNumber1);
+//                }
+//            }else {
+//            if (inputNumber1 < inputNumber3) {
+//                System.out.println(inputNumber3 + ", " + inputNumber1 + ", " + inputNumber2);
+//            } else if (inputNumber3 < inputNumber2) {
+//                System.out.println(inputNumber1 + ", " + inputNumber2 + ", " + inputNumber3);
+//            } else {
+//                System.out.println(inputNumber1 + ", " + inputNumber3 + ", " + inputNumber2);
+//            }
+//        }
+
+    }
+
+//    static void hello() {
+//        System.out.println("Hello from method");
+//    static int hello() {
+//        return 1;
+    static double input(String message) {
+        try {
+            System.out.println(message);
+            Scanner scanner = new Scanner(System.in);
+            return scanner.nextDouble();
+        } catch (InputMismatchException e) {
+            System.out.println("Przoszę podać liczbę całkowitą");
+            return input(message);
         }
-
-        // Wyświetlenie wyniku
-        System.out.printf("Podatek do zapłaty: %.2f PLN\n", podatek);
-        //(tax < 0 ? 0 : tax)
-
-        // Zamykamy obiekt Scanner
-        input.close();
-
 
     }
 }
