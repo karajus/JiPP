@@ -213,6 +213,8 @@ public class Exercise {
 
         // Zamykamy obiekt Scanner
         input.close();
+
+
     }
 }
 
