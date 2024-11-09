@@ -9,6 +9,16 @@ public class kalkulator2 {
         double number1, number2, result;
 
         Scanner input = new Scanner(System.in);
+        operator = checkOperator(input);
+
+        number1 = input("Enter first number: ");
+        number2 = input("Enter second number: ");
+
+        calculatorHeart(operator, number1, number2);
+    }
+
+    private static char checkOperator(Scanner input) {
+        char operator;
         while (true) {
             System.out.println("Choose an operator: +, -, *, or /");
             operator = input.next().charAt(0);
@@ -18,12 +28,11 @@ public class kalkulator2 {
                 System.out.println("Invalid operator, try again!");
             }
         }
+        return operator;
+    }
 
-        // ask users to enter numbers
-
-        number1 = input("Enter first number: ");
-        number2 = input("Enter second number: ");
-
+    private static void calculatorHeart(char operator, double number1, double number2) {
+        double result;
         switch (operator) {
 
             // performs addition between numbers

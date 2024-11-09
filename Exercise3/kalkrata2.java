@@ -8,42 +8,42 @@ public class kalkrata2 {
 
         //sklep AGD,
         Scanner input = new Scanner(System.in);
-        int cena = 0;
-        int rata = 0;
+        int price = inputInt("Podaj cenę towaru: ");
+        int rata = inputInt("Podaj ilość rat: ");
 
-        double oprocentowanie = 0;
-        while (true) {
-            cena = inputInt("podaj cene towaru");
-            if (100 <= cena && cena <= 10000) {
-                break;
-            } else {
-                System.out.println("Wartość powinna mieścić się w przedziale 100 - 10000");
-            }
+        if (isParametersValid(price, rata)) {
+            error();
         }
-        while (true) {
-            rata = inputInt("podaj liczbe rat");
-            if (6 <= rata && rata <= 48) {
-                break;
-            } else {
-                System.out.println("Wartość rat powinna mieścić się w przedziale 6 - 48");
-            }
-        }
+        //alt + contr + m
+        calculatedresults(price, rata);
+    }
 
+    private static boolean isParametersValid(int price, int rata) {
+        return price < 100 || price > 10_000 || rata < 6 || rata > 48;
+    }
 
-        if (100 < cena && cena < 10000) {
-            if (6 < rata && rata < 12) {
-                oprocentowanie = 0.025;
-            } else if (13 < rata && rata < 24) {
-                oprocentowanie = 0.05;
-            } else {
-                oprocentowanie = 0.1;
-            }
-        }
-        double calKoszt = cena * (1 + oprocentowanie);
+    private static void calculatedresults(int price, int rata) {
+        double calKoszt = price * (1 + getOprocentowanie(rata));
         double ratamies = Math.round(calKoszt / rata);
         System.out.println("Całkowity Koszt kredytu wyniesie: " + calKoszt);
         System.out.println("rata miesieczna będzie wynosiła: " + ratamies);
+    }
 
+    private static void error() {
+        System.out.println("Wartość powinna mieścić się w przedziale 100 - 10000");
+        System.out.println("Wartość rat powinna mieścić się w przedziale 6 - 48");
+    }
+
+    private static double getOprocentowanie(int rata) {
+        double oprocentowanie;
+        if (rata <= 12) {
+            oprocentowanie = 0.025;
+        } else if (rata <= 24) {
+            oprocentowanie = 0.05;
+        } else {
+            oprocentowanie = 0.1;
+        }
+        return oprocentowanie;
     }
 
     static int inputInt(String message) {
@@ -56,4 +56,5 @@ public class kalkrata2 {
             return inputInt(message);
         }
     }
+
 }
