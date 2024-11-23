@@ -63,9 +63,14 @@ public class Main {
 
             } else if (number ==3) {
 
-                employees.add()
+                System.out.println("Wprowadź imie");
+                System.out.println("Wprowadź nazwisko");
+                String employeename = input.next();
+                String employeesurname = input.next();
+                employees.add(new Employee(new Person(employeename, employeesurname),null);
+
             }
-        }else {
+            }else {
                 System.out.println("błędny input");
             }
 
