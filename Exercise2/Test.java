@@ -73,7 +73,7 @@ class Punkt {
     public int x;
     public int y;
 
-    public Point() {
+    public void Point() {
         this.x = 0;
         this.y = 0;
     }
