@@ -34,5 +34,14 @@ public class Company {
     public void setEmployees(List<Employee> employees) {
         this.employees = employees;
     }
+
+    public void addEmployee(String name, String surname, int age) {
+        // Fixed class name and constructor
+        Person person = new Person(name, surname, age);
+        Employee employee = new Employee(person, null);
+
+        // Adding to the list
+        employees.add(employee);
+    }
 }
 

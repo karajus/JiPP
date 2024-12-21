@@ -49,32 +49,51 @@ public class Main {
         company.setEmployees(employees);
         System.out.println(company.getEmployees());
 
-        System.out.println("Panel Administratora firmy " + company.getName());
+        System.out.println("Panel Administratora firmy " + company.getName().toUpperCase());
 
-        boolean done = false;
-        while (!done) {
-            System.out.println("Wciśnij 1 by zakończyć, " +
-                    "wciśnij 2 by wyświetlić pracowników, " +
-                    "wciśnij 3 by dodac pracownika, " +
-                    "wciśnij 4 by usunąć pracownika");
+        while (true) {
+            System.out.println("Operacje: \n" +
+                    "0. Zakończyńcz program, \n" +
+                    "1. Wyświetl listę pracowników, \n" +
+                    "2. Dodaj pracownika, \n" +
+                    "3. Usuń pracownika \n" +
+                    "4. Zmień dane pracownika");
             Scanner input = new Scanner(System.in);
             int number = input.nextInt();
             switch (number) {
-                case 1:
+                case 0:
                     exit(0);
+                case 1:
+                    Utilss.printanswer(company.getEmployees().toString());
+                    break;
+
                 case 2:
-                    System.out.println(company.getEmployees().toString());
 
-                case 3:
-
-                    System.out.println("Wprowadź imie");
-                    System.out.println("Wprowadź nazwisko");
+                    Utilss.printanswer("Wprowadź imie");
+                    Utilss.printanswer("Wprowadź nazwisko");
                     String employeename = input.next();
                     String employeesurname = input.next();
-                    employees.add(new Employee(new Person(employeename, employeesurname),null);
+                    //employees.add(new Employee(new Person(employeename, employeesurname),null);
+                    break;
+
+                case 3:
+                    // usuwanie , czy napewno chcesz usunąć? potwierdzenie wszystkich oparacji
+                    List<Employee> employess = company.getEmployees();
+                    for (int i = 0; i < employess.size(); i++) {
+                        System.out.println(i + " - " + employess.get(i).getFullName());
+
+                    }
+                    // id unikalne i niezmienne
+                    int index = Utilss.inputInt("Podaj id pracownika: ");
+                    Employee employee = employess.get(index);
+                    employess.remove(index);
+                    Utilss.printanswer("Pomylnie zwolniono pracownika : %s %s".formatted(employee.getName(), employee.getSurname()));
+                    break;
+                case 4:
+                    //update
 
                 default:
-                    System.out.println("błędny input");
+                    System.out.println("Błędny input");
             }
 
 
