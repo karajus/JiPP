@@ -53,25 +53,28 @@ public class Main {
 
         boolean done = false;
         while (!done) {
-            System.out.println("Wciśnij 1 by zakończyć, wciśnij 2 by wyświetlić pracowników");
+            System.out.println("Wciśnij 1 by zakończyć, " +
+                    "wciśnij 2 by wyświetlić pracowników, " +
+                    "wciśnij 3 by dodac pracownika, " +
+                    "wciśnij 4 by usunąć pracownika");
             Scanner input = new Scanner(System.in);
             int number = input.nextInt();
-            if (number == 1) {
-                exit(0);
-            } else if (number == 2) {
-                System.out.println(company.getEmployees());
+            switch (number) {
+                case 1:
+                    exit(0);
+                case 2:
+                    System.out.println(company.getEmployees().toString());
 
-            } else if (number ==3) {
+                case 3:
 
-                System.out.println("Wprowadź imie");
-                System.out.println("Wprowadź nazwisko");
-                String employeename = input.next();
-                String employeesurname = input.next();
-                employees.add(new Employee(new Person(employeename, employeesurname),null);
+                    System.out.println("Wprowadź imie");
+                    System.out.println("Wprowadź nazwisko");
+                    String employeename = input.next();
+                    String employeesurname = input.next();
+                    employees.add(new Employee(new Person(employeename, employeesurname),null);
 
-            }
-            }else {
-                System.out.println("błędny input");
+                default:
+                    System.out.println("błędny input");
             }
 
 
