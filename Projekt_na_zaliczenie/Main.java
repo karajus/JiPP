@@ -14,7 +14,7 @@ public class Main {
         secondPerson.setName("Artur");
         secondPerson.setSurname("Konieczny");
 
-        Address address = new Address("Warszawa", "szeroka");
+        Address address = new Address("Warszawa", "Szeroka");
         firstPerson.setAddress(address);
 
         Employee firstEmployee = new Employee(firstPerson, Department.SALES);
@@ -38,7 +38,9 @@ public class Main {
                     "1. Wyświetl listę pracowników \n" +
                     "2. Dodaj pracownika \n" +
                     "3. Usuń pracownika \n" +
-                    "4. Zmień dane pracownika");
+                    "4. Zmień dane pracownika" +
+                    "5. Wyświetl pracowników danego działu");
+
             Scanner input = new Scanner(System.in);
             int number = input.nextInt();
             switch (number) {
@@ -89,6 +91,9 @@ public class Main {
 
                     Utilss.print("Zmieniono dane użytkownika");
                     break;
+                case 5:
+                    List<Department> departmets = Department.getName();
+
 
                 default:
                     System.out.println("Błędny input");
