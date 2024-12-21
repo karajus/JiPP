@@ -43,5 +43,7 @@ class Person {
         }
     }
     public void setAge(int age){this.age = age;}
+
+    //dodać tutaj listę pracowników
 }
 

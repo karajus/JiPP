@@ -36,7 +36,7 @@ public class Main {
             System.out.print("\nOperacje: \n" +
                     "0. Zakończyńcz program \n" +
                     "1. Wyświetl listę pracowników \n" +
-                    "2. Dodaj pracownika \n" +
+                    "2. Dodaj pracownika \n" + //sprawdzenie czy nie ma już takiego użytkownika
                     "3. Usuń pracownika \n" +
                     "4. Zmień dane pracownika" +
                     "5. Wyświetl pracowników danego działu");
