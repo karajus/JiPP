@@ -1,19 +1,22 @@
 package Projekt_na_zaliczenie;
 
-class Address{
+class Address {
     private String city;
     private String street;
 
-    public Address(String City, String Street){
-        this.city = City;
-        this.street = Street;
+    // Konstruktor z parametrami
+    public Address(String city, String street) {
+        this.city = city;
+        this.street = street;
     }
 
-    public Address(){
+    // Konstruktor domyślny
+    public Address() {
         this.city = "City";
         this.street = "Street";
     }
 
+    // Gettery
     public String getCity() {
         return city;
     }
@@ -22,6 +25,7 @@ class Address{
         return street;
     }
 
+    // Settery
     public void setCity(String city) {
         this.city = city;
     }
@@ -29,5 +33,9 @@ class Address{
     public void setStreet(String street) {
         this.street = street;
     }
-    public String getFullAddress(){return city + " " + street;}
+
+    // Metoda zwracająca pełny adres
+    public String getFullAddress() {
+        return city + ", " + street;
+    }
 }

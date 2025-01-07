@@ -1,112 +1,218 @@
 package Projekt_na_zaliczenie;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.InputMismatchException;
+import java.util.stream.Collectors;
 
 import static java.lang.System.exit;
 
 public class Main {
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
-        Person firstPerson = new Person("Jan", "Kowalski", 19);
-        Person secondPerson = new Person("Kazimierz", "Przykładowy", 16);
-        secondPerson.setName("Artur");
-        secondPerson.setSurname("Konieczny");
+        // Utwórz bazę osób
+        PersonDatabase personDatabase = new PersonDatabase();
+        List<Employee> employeesFromDatabase = personDatabase.getEmployeeList();
 
-        Address address = new Address("Warszawa", "Szeroka");
-        firstPerson.setAddress(address);
+        // Tworzymy firmę i ustawiamy początkowy adres
 
-        Employee firstEmployee = new Employee(firstPerson, Department.SALES);
-        Employee secondEmployee = new Employee(secondPerson, Department.ADMINISTRATION);
-        Person thirdPerson = new Person("Michal", "Kowal", 55);
-        Employee thirdEmployee = new Employee(thirdPerson, Department.FINANCE);
+        Company company = new Company("Firma");
 
-        List<Employee> employees = new ArrayList<>();
-        employees.add(firstEmployee);
-        employees.add(secondEmployee);
-        employees.add(thirdEmployee);
+        // Dodajemy pracowników z bazy danych do firmy
+        for (Employee employee : employeesFromDatabase) {
+            company.getEmployees().add(employee);
+        }
 
-        Company company = new Company("Firma", address);
-        company.setEmployees(employees);
+        // Panel Administratora firmy
+        Utilss.print(("\nPanel Administratora firmy " + company.getName()).toUpperCase());
 
-        Utilss.print(("Panel Administratora firmy " + company.getName()).toUpperCase());
+        Scanner input = new Scanner(System.in);
 
         while (true) {
-            System.out.print("\nOperacje: \n" +
-                    "0. Zakończyńcz program \n" +
+            System.out.print("========================================\n" +
+                    "Operacje: \n" +
+                    "0. Zakończ program \n" +
                     "1. Wyświetl listę pracowników \n" +
-                    "2. Dodaj pracownika \n" + //sprawdzenie czy nie ma już takiego użytkownika
+                    "2. Dodaj pracownika \n" +
                     "3. Usuń pracownika \n" +
-                    "4. Zmień dane pracownika" +
-                    "5. Wyświetl pracowników danego działu");
+                    "4. Zmień dane pracownika \n" +
+                    "5. Wyświetl pracowników danego działu\n" +
+                    "========================================\n");
 
-            Scanner input = new Scanner(System.in);
-            int number = input.nextInt();
+            int number = getValidIntInput(input);
+
             switch (number) {
                 case 0:
                     Utilss.print("Do Zobaczenia!");
                     exit(0);
+
                 case 1:
-                    Utilss.print(company.getEmployees().toString());
+                    // Wyświetl listę pracowników
+                    Utilss.print("Lista pracowników:");
+                    System.out.println("Lista pracowników:");
+                    Utilss.displayEmployeeTable(company.getEmployees());
+
                     break;
 
                 case 2:
+                    // Dodaj nowego pracownika
+                    Utilss.print("Wprowadź imię:");
+                    String employeeName = input.nextLine();
+                    Utilss.print("Wprowadź nazwisko:");
+                    String employeeSurname = input.nextLine();
+                    Utilss.print("Wprowadź wiek:");
+                    int employeeAge = getValidIntInput(input);
 
-                    Utilss.print("Wprowadź imie");
-                    Utilss.print("Wprowadź nazwisko");
-                    String employeename = input.next();
-                    String employeesurname = input.next();
-                    //employees.add(new Employee(new Person(employeename, employeesurname),null);
+                    Utilss.print("Wprowadź miasto:");
+                    String city = input.nextLine();
+                    Utilss.print("Wprowadź ulicę:");
+                    String street = input.nextLine();
+
+                    Utilss.print("Wybierz dział: 1.SALES, 2.ADMINISTRATION, 3.FINANCE");
+                    int deptChoice = getValidIntInput(input, 1, Department.values().length);
+                    Department department = Department.values()[deptChoice - 1];
+
+                    // Tworzymy nowego pracownika
+                    Address newAddress = new Address(city, street);
+                    Person newPerson = new Person(employeeName, employeeSurname, employeeAge);
+                    newPerson.setAddress(newAddress);
+                    Employee newEmployee = new Employee(newPerson, department);
+
+                    // Dodajemy nowego pracownika do listy
+                    if (company.getEmployees().contains(newEmployee)) {
+                        Utilss.print("Pracownik już istnieje!");
+                    } else {
+                        company.getEmployees().add(newEmployee);
+                        Utilss.print("Dodano nowego pracownika.");
+                    }
                     break;
 
                 case 3:
-                    // usuwanie , czy napewno chcesz usunąć? potwierdzenie wszystkich oparacji
-                    List<Employee> employess = company.getEmployees();
-                    for (int i = 0; i < employess.size(); i++) {
-                        System.out.println(i + " - " + employess.get(i).getFullName());
-
+                    // Usuń pracownika
+                    Utilss.print("Lista pracowników:");
+                    List<Employee> employeesToRemove = company.getEmployees();
+                    for (int i = 0; i < employeesToRemove.size(); i++) {
+                        Employee emp = employeesToRemove.get(i);
+                        System.out.println((i + 1) + " - " + emp.getPerson().getFullName());
                     }
-                    // id unikalne i niezmienne
-                    int index = Utilss.inputInt("Podaj id pracownika: ");
-                    Employee employee = employess.get(index);
-                    employess.remove(index);
-                    Utilss.print("Pomylnie zwolniono pracownika : %s %s".formatted(employee.getName(), employee.getSurname()));
+
+                    int indexToRemove = getValidIntInput(input) - 1;
+                    if (indexToRemove >= 0 && indexToRemove < employeesToRemove.size()) {
+                        Employee employeeToRemove = employeesToRemove.get(indexToRemove);
+                        employeesToRemove.remove(indexToRemove);
+                        Utilss.print("Pomyślnie zwolniono pracownika: " + employeeToRemove.getPerson().getFullName());
+                    } else {
+                        Utilss.print("Niepoprawne ID pracownika.");
+                    }
                     break;
+
                 case 4:
-                    //update
-                    List<Employee> employess2 = company.getEmployees();
-                    for (int i = 0; i < employess2.size(); i++) {
-                        System.out.println(i + " - " + employess2.get(i).getFullName());
-
+                    // Zmień dane pracownika
+                    Utilss.print("Lista pracowników:");
+                    List<Employee> employeesToUpdate = company.getEmployees();
+                    for (int i = 0; i < employeesToUpdate.size(); i++) {
+                        Employee emp = employeesToUpdate.get(i);
+                        System.out.println((i + 1) + " - " + emp.getPerson().getFullName());
                     }
-                    // id unikalne i niezmienne
-                    int index2 = Utilss.inputInt("Podaj id pracownika: ");
-                    int remove = Utilss.inputInt("Którą warość zmienić?\n" +
-                            "0. Nic nie zmieniam \n" +
-                            "1. Zmień Imię\n" +
-                            "2. Zmień Nazwisko\n" +
-                            "3. Zmień Adres\n" +
-                            "4. Zmień Department");
 
-                    Utilss.print("Zmieniono dane użytkownika");
+                    int indexToUpdate = getValidIntInput(input) - 1;
+                    if (indexToUpdate >= 0 && indexToUpdate < employeesToUpdate.size()) {
+                        Employee employeeToUpdate = employeesToUpdate.get(indexToUpdate);
+
+                        Utilss.print("Którą wartość zmienić?\n" +
+                                "0. Nic nie zmieniam \n" +
+                                "1. Zmień Imię\n" +
+                                "2. Zmień Nazwisko\n" +
+                                "3. Zmień Adres\n" +
+                                "4. Zmień Department");
+                        int choice = getValidIntInput(input);
+
+                        switch (choice) {
+                            case 1:
+                                Utilss.print("Wprowadź nowe imię:");
+                                String newName = input.nextLine();
+                                employeeToUpdate.getPerson().setName(newName);
+                                break;
+
+                            case 2:
+                                Utilss.print("Wprowadź nowe nazwisko:");
+                                String newSurname = input.nextLine();
+                                employeeToUpdate.getPerson().setSurname(newSurname);
+                                break;
+
+                            case 3:
+                                Utilss.print("Wprowadź nowe miasto:");
+                                String newCity = input.nextLine();
+                                Utilss.print("Wprowadź nową ulicę:");
+                                String newStreet = input.nextLine();
+                                employeeToUpdate.getPerson().setAddress(new Address(newCity, newStreet));
+                                break;
+
+                            case 4:
+                                Utilss.print("Wybierz nowy dział: 1.SALES, 2.ADMINISTRATION, 3.FINANCE");
+                                int newDeptChoice = getValidIntInput(input, 1, Department.values().length);
+                                Department newDept = Department.values()[newDeptChoice - 1];
+                                employeeToUpdate.setDepartment(newDept);
+                                break;
+
+                            default:
+                                Utilss.print("Nie zmieniono danych.");
+                        }
+                        Utilss.print("Zmieniono dane pracownika.");
+                    } else {
+                        Utilss.print("Niepoprawne ID pracownika.");
+                    }
                     break;
-                case 5:
-                    List<Department> departmets = Department.getName();
 
+                case 5:
+                    // Wyświetl pracowników z wybranego działu
+                    Utilss.print("Wybierz dział: 1.SALES, 2.ADMINISTRATION, 3.FINANCE");
+                    int deptChoice2 = getValidIntInput(input, 1, Department.values().length);
+                    Department selectedDepartment = Department.values()[deptChoice2 - 1];
+
+                    Utilss.print("Pracownicy w dziale " + selectedDepartment + ":");
+                    Utilss.print("\n+----------------------------------------+");
+                    Utilss.print("| IMIĘ    | NAZWISKO    | WIEK  |");
+                    Utilss.print("+----------------------------------------+");
+
+                    List<Employee> filteredEmployees = company.getEmployees().stream()
+                            .filter(emp -> emp.getDepartment() == selectedDepartment)
+                            .collect(Collectors.toList());
+                    Utilss.displayEmployeeTable(filteredEmployees);
+
+                    break;
 
                 default:
                     System.out.println("Błędny input");
             }
-
-
         }
+    }
 
+    // Metoda do pobierania poprawnych liczb całkowitych w zadanym zakresie
+    private static int getValidIntInput(Scanner input) {
+        while (true) {
+            try {
+                return input.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("Proszę podać liczbę całkowitą.");
+                input.nextLine(); // Konsumuje niewłaściwy input
+            }
+        }
+    }
 
-
-
+    private static int getValidIntInput(Scanner input, int minValue, int maxValue) {
+        while (true) {
+            try {
+                int choice = input.nextInt();
+                if (choice >= minValue && choice <= maxValue) {
+                    return choice;
+                } else {
+                    System.out.println("Proszę wybrać numer w zakresie od " + minValue + " do " + maxValue);
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Proszę podać liczbę całkowitą.");
+                input.nextLine(); // Konsumuje niewłaściwy input
+            }
+        }
     }
 }
-
-
-
