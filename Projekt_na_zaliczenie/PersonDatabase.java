@@ -15,7 +15,7 @@ public class PersonDatabase {
     private void loadPeopleData() {
         // Tworzymy dane i przypisujemy do listy employeeList
         addEmployee("Jan", "Kowalski", 29, "Warszawa", "Szeroka", Department.SALES);
-        addEmployee("Kazimierz", "Przykładowy", 30, "Kraków", "Zielona", Department.ADMINISTRATION);
+        addEmployee("Kazimierz", "Przykładowy", 16, "Kraków", "Zielona", Department.ADMINISTRATION);
         addEmployee("Artur", "Konieczny", 35, "Wrocław", "Pięciomorgowa", Department.FINANCE);
         addEmployee("Michał", "Nowak", 25, "Poznań", "Lipowa", Department.SALES);
         addEmployee("Piotr", "Mazur", 42, "Gdańsk", "Morska", Department.ADMINISTRATION);

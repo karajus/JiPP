@@ -5,9 +5,9 @@ import java.util.*;
 public class Utilss {
     static String input(String message) {
         try {
-            System.out.println(message);
             Scanner scanner = new Scanner(System.in);
-            return scanner.next();
+            System.out.println(message);
+            return scanner.nextLine();
         } catch (InputMismatchException e) {
             System.out.println("Przoszę podać liczbę całkowitą");
             return input(message);
@@ -15,8 +15,8 @@ public class Utilss {
     }
     static int inputInt(String message) {
         try {
-            System.out.println(message);
             Scanner scanner = new Scanner(System.in);
+            System.out.println(message);
             return scanner.nextInt();
         } catch (InputMismatchException e) {
             System.out.println("Przoszę podać liczbę całkowitą");

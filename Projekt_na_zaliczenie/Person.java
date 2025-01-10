@@ -37,7 +37,12 @@ class Person {
     }
 
     public String getFullName() {
-        return name + " " + surname + " " + age + " lat.";
+        return name + " " + surname + " " + age + " lat";
+    }
+    @Override
+    public String toString() {
+        String displayAddress = (address == null) ? new Address().toString() : address.toString();
+        return getFullName() + ", " + age + " lat, Adres: " + displayAddress;
     }
 
     public Address getAddress() {

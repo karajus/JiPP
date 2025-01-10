@@ -4,6 +4,8 @@ class Address {
     private String city;
     private String street;
 
+
+
     // Konstruktor z parametrami
     public Address(String city, String street) {
         this.city = city;
@@ -32,6 +34,13 @@ class Address {
 
     public void setStreet(String street) {
         this.street = street;
+    }
+
+    @Override
+    public String toString() {
+        String displayCity = (city == null) ? "City" : city;
+        String displayStreet = (street == null) ? "Street" : street;
+        return displayStreet + ", " + displayCity;
     }
 
     // Metoda zwracająca pełny adres

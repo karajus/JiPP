@@ -1,5 +1,6 @@
 package Projekt_na_zaliczenie;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 import java.util.InputMismatchException;
@@ -10,13 +11,13 @@ import static java.lang.System.exit;
 public class Main {
     public static void main(String[] args) {
 
-        // Utwórz bazę osób
+        // Baza osób
         PersonDatabase personDatabase = new PersonDatabase();
         List<Employee> employeesFromDatabase = personDatabase.getEmployeeList();
 
-        // Tworzymy firmę i ustawiamy początkowy adres
+        // Nazwa Firmy
 
-        Company company = new Company("Firma");
+        Company company = new Company("IT-Firma");
 
         // Dodajemy pracowników z bazy danych do firmy
         for (Employee employee : employeesFromDatabase) {
@@ -24,7 +25,7 @@ public class Main {
         }
 
         // Panel Administratora firmy
-        Utilss.print(("\nPanel Administratora firmy " + company.getName()).toUpperCase());
+        Utilss.print(("\nPanel Administratora firmy ").toUpperCase() + company.getName());
 
         Scanner input = new Scanner(System.in);
 
@@ -49,24 +50,34 @@ public class Main {
                 case 1:
                     // Wyświetl listę pracowników
                     Utilss.print("Lista pracowników:");
-                    System.out.println("Lista pracowników:");
                     Utilss.displayEmployeeTable(company.getEmployees());
 
                     break;
 
                 case 2:
                     // Dodaj nowego pracownika
-                    Utilss.print("Wprowadź imię:");
-                    String employeeName = input.nextLine();
-                    Utilss.print("Wprowadź nazwisko:");
-                    String employeeSurname = input.nextLine();
-                    Utilss.print("Wprowadź wiek:");
-                    int employeeAge = getValidIntInput(input);
+                    String employeeName = getValidStringInput(input, "Wprowadź imię:");
+                    String employeeSurname = getValidStringInput(input, "Wprowadź nazwisko:");
 
-                    Utilss.print("Wprowadź miasto:");
-                    String city = input.nextLine();
-                    Utilss.print("Wprowadź ulicę:");
-                    String street = input.nextLine();
+                    int employeeAge;
+                    do {
+                        Utilss.print("Wprowadź wiek:");
+                        employeeAge = getValidIntInput(input);
+                        if (employeeAge < 16) {
+                            Utilss.print("Za młody by pracować");
+                            break; // Powrót do głównego menu
+                        } else if (employeeAge > 65) {
+                            Utilss.print("Czas na emeryturę, nie zatrudniamy");
+                            break; // Powrót do głównego menu
+                        }
+                    } while (employeeAge < 16 || employeeAge > 65);
+
+                    if (employeeAge < 16 || employeeAge > 65) {
+                        break; // Powrót do głównego menu
+                    }
+
+                    String city = getValidStringInput(input, "Wprowadź miasto:");
+                    String street = getValidStringInput(input, "Wprowadź ulicę:");
 
                     Utilss.print("Wybierz dział: 1.SALES, 2.ADMINISTRATION, 3.FINANCE");
                     int deptChoice = getValidIntInput(input, 1, Department.values().length);
@@ -109,18 +120,23 @@ public class Main {
                 case 4:
                     // Zmień dane pracownika
                     Utilss.print("Lista pracowników:");
+                    System.out.println("0 - Nie zmieniam danych, wróć do menu głównego");
                     List<Employee> employeesToUpdate = company.getEmployees();
                     for (int i = 0; i < employeesToUpdate.size(); i++) {
                         Employee emp = employeesToUpdate.get(i);
-                        System.out.println((i + 1) + " - " + emp.getPerson().getFullName());
+                        System.out.println((i + 1) + " - " + emp.getPerson() + ", Dział: " + emp.getDepartment());
                     }
 
+
                     int indexToUpdate = getValidIntInput(input) - 1;
+                    if (indexToUpdate == -1) {
+                        break; // Powrót do głównego menu
+                    }
+
                     if (indexToUpdate >= 0 && indexToUpdate < employeesToUpdate.size()) {
                         Employee employeeToUpdate = employeesToUpdate.get(indexToUpdate);
 
                         Utilss.print("Którą wartość zmienić?\n" +
-                                "0. Nic nie zmieniam \n" +
                                 "1. Zmień Imię\n" +
                                 "2. Zmień Nazwisko\n" +
                                 "3. Zmień Adres\n" +
@@ -128,28 +144,25 @@ public class Main {
                         int choice = getValidIntInput(input);
 
                         switch (choice) {
+
                             case 1:
-                                Utilss.print("Wprowadź nowe imię:");
-                                String newName = input.nextLine();
+                                String newName = getValidStringInput(input, "Wprowadź nowe imię:");
                                 employeeToUpdate.getPerson().setName(newName);
                                 break;
 
                             case 2:
-                                Utilss.print("Wprowadź nowe nazwisko:");
-                                String newSurname = input.nextLine();
+                                String newSurname = getValidStringInput(input, "Wprowadź nowe nazwisko:");
                                 employeeToUpdate.getPerson().setSurname(newSurname);
                                 break;
 
                             case 3:
-                                Utilss.print("Wprowadź nowe miasto:");
-                                String newCity = input.nextLine();
-                                Utilss.print("Wprowadź nową ulicę:");
-                                String newStreet = input.nextLine();
+                                String newCity = getValidStringInput(input, "Wprowadź nowe miasto:");
+                                String newStreet = getValidStringInput(input, "Wprowadź nową ulicę:");
                                 employeeToUpdate.getPerson().setAddress(new Address(newCity, newStreet));
                                 break;
 
                             case 4:
-                                Utilss.print("Wybierz nowy dział: 1.SALES, 2.ADMINISTRATION, 3.FINANCE");
+                                Utilss.print("Wybierz nowy dział: 1.SALES, 2.ADMINISTRATION, 3.FINANCE, 4.ENGINEERS");
                                 int newDeptChoice = getValidIntInput(input, 1, Department.values().length);
                                 Department newDept = Department.values()[newDeptChoice - 1];
                                 employeeToUpdate.setDepartment(newDept);
@@ -166,19 +179,22 @@ public class Main {
 
                 case 5:
                     // Wyświetl pracowników z wybranego działu
-                    Utilss.print("Wybierz dział: 1.SALES, 2.ADMINISTRATION, 3.FINANCE");
+                    Utilss.print("Wybierz dział: 1.SALES, 2.ADMINISTRATION, 3.FINANCE, 4.ENGINEERS");
                     int deptChoice2 = getValidIntInput(input, 1, Department.values().length);
                     Department selectedDepartment = Department.values()[deptChoice2 - 1];
 
-                    Utilss.print("Pracownicy w dziale " + selectedDepartment + ":");
-                    Utilss.print("\n+----------------------------------------+");
-                    Utilss.print("| IMIĘ    | NAZWISKO    | WIEK  |");
-                    Utilss.print("+----------------------------------------+");
 
                     List<Employee> filteredEmployees = company.getEmployees().stream()
                             .filter(emp -> emp.getDepartment() == selectedDepartment)
+                            .sorted(Comparator.comparing(emp -> emp.getPerson().getFullName()))
                             .collect(Collectors.toList());
-                    Utilss.displayEmployeeTable(filteredEmployees);
+
+                    if (filteredEmployees.isEmpty()) {
+                        Utilss.print("brak pracowników w dziale ".toUpperCase() + selectedDepartment);
+                    } else {
+                        Utilss.print("Pracownicy w dziale " + selectedDepartment + ":");
+                        Utilss.displayEmployeeTable(filteredEmployees);
+                    }
 
                     break;
 
@@ -188,14 +204,13 @@ public class Main {
         }
     }
 
-    // Metoda do pobierania poprawnych liczb całkowitych w zadanym zakresie
     private static int getValidIntInput(Scanner input) {
         while (true) {
             try {
                 return input.nextInt();
             } catch (InputMismatchException e) {
                 System.out.println("Proszę podać liczbę całkowitą.");
-                input.nextLine(); // Konsumuje niewłaściwy input
+                input.nextLine();
             }
         }
     }
@@ -211,8 +226,29 @@ public class Main {
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Proszę podać liczbę całkowitą.");
-                input.nextLine(); // Konsumuje niewłaściwy input
+                input.nextLine();
             }
         }
+    }
+
+    // Metoda do walidacji stringów
+    private static String getValidStringInput(Scanner input, String prompt) {
+        String value;
+        do {
+            Utilss.print(prompt);
+            value = input.nextLine();
+            if (value.isEmpty() || value.matches(".*\\d.*") || value.length() < 3) {
+                Utilss.print("Wprowadź poprawne dane (minimum 3 litery, bez cyfr)");
+            }
+        } while (value.isEmpty() || value.matches(".*\\d.*") || value.length() < 3);
+        return capitalizeFirstLetter(value);
+    }
+
+    // Metoda do kapitalizacji pierwszej litery
+    private static String capitalizeFirstLetter(String input) {
+        if (input == null || input.isEmpty()) {
+            return input;
+        }
+        return input.substring(0, 1).toUpperCase() + input.substring(1).toLowerCase();
     }
 }
