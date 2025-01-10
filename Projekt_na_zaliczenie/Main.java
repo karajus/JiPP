@@ -79,7 +79,7 @@ public class Main {
                     String city = getValidStringInput(input, "Wprowadź miasto:");
                     String street = getValidStringInput(input, "Wprowadź ulicę:");
 
-                    Utilss.print("Wybierz dział: 1.SALES, 2.ADMINISTRATION, 3.FINANCE");
+                    Utilss.print("Wybierz dział: 1.SALES, 2.ADMINISTRATION, 3.FINANCE, 4.ENGINEERS");
                     int deptChoice = getValidIntInput(input, 1, Department.values().length);
                     Department department = Department.values()[deptChoice - 1];
 
