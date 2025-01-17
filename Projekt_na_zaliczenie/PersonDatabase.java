@@ -26,7 +26,7 @@ public class PersonDatabase {
         addEmployee("Dawid", "Jasiński", 37, "Wrocław", "Rynkowska", Department.SALES);
     }
 
-private void addEmployee(String name, String surname, int age, String city, String street, Department department) {
+public void addEmployee(String name, String surname, int age, String city, String street, Department department) {
     Address address = new Address(city, street);
     Person person = new Person(name, surname, age, address);
     person.setAddress(address);

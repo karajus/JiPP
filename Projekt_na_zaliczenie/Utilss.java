@@ -12,6 +12,50 @@ public class Utilss {
         System.out.println(message.toUpperCase());
     }
 
+    public static String getValidStringInput(Scanner input, String prompt) {
+        String value;
+        do {
+            Utilss.print(prompt);
+            value = input.nextLine();
+            if (value.matches(".*\\d.*") || value.length() < 3) {
+                Utilss.print("Wprowadź poprawne dane (minimum 3 litery, bez cyfr).");
+            }
+        } while (value.matches(".*\\d.*") || value.length() < 3);
+        return capitalizeFirstLetter(value);
+    }
+
+    public static int getValidIntInput(Scanner input) {
+        while (true) {
+            try {
+                return input.nextInt();
+            } catch (InputMismatchException e) {
+                Utilss.printUpper("Proszę podać liczbę całkowitą.");
+                input.nextLine();
+            }
+        }
+    }
+
+    public static int getValidIntInput(Scanner input, int minValue, int maxValue) {
+        while (true) {
+            try {
+                int choice = input.nextInt();
+                if (choice >= minValue && choice <= maxValue) {
+                    return choice;
+                } else Utilss.print(STR."Proszę wybrać numer w zakresie od \{minValue} do \{maxValue}");
+            } catch (InputMismatchException e) {
+                Utilss.printUpper("Proszę podać liczbę całkowitą.");
+                input.nextLine();
+            }
+        }
+    }
+
+    private static String capitalizeFirstLetter(String input) {
+        if (input == null || input.isEmpty()) {
+            return input;
+        }
+        return input.substring(0, 1).toUpperCase() + input.substring(1).toLowerCase();
+    }
+
     public static void cancelingProgram(){
         Utilss.print("Do Zobaczenia!");
         System.exit(0);
@@ -73,12 +117,12 @@ public class Utilss {
         }
 
         String border = borderLine.toString();
-        System.out.println(border);
+        print(border);
 
         // Print header row with proper dynamic adjustments
         System.out.printf("| %-" + columnWidths[0] + "s | %-" + columnWidths[1] + "s | %-" + columnWidths[2] + "s | %-" + columnWidths[3] + "s | %-" + columnWidths[4] + "s |\n",
         headers[0], headers[1], headers[2], headers[3], headers[4]);
-        System.out.println(border);
+        print(border);
 
         // Print rows with dynamic formatting adjustments
         for (int i = 0; i < employees.size(); i++) {
@@ -90,10 +134,7 @@ public class Utilss {
             employee.getPerson().getAge() + (employee.getPerson().getAge() % 10 == 2 ? " lata" : " lat"),
             employee.getDepartment().getName());
         }
-
-        System.out.println(border);
-
-
+        print(border);
     }
 
 }

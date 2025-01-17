@@ -28,12 +28,8 @@ public class Person {
     }
 
     public String getFullName() {
-        return name + " " + surname + " " + age + " lat";
-    }
-    @Override
-    public String toString() {
-        String displayAddress = (address == null) ? new Address().toString() : address.toString();
-        return getFullName() + ", " + age + " lat, Adres: " + displayAddress;
+        String ageSuffix = (age % 10 == 2 && age % 100 != 12) ? "lata" : "lat";
+        return name + " " + surname + " " + age + " " + ageSuffix;
     }
 
     public Address getAddress() {
@@ -58,7 +54,4 @@ public class Person {
         this.age = age;
     }
 
-    public String getFullInfo() {
-        return "Imię: " + name + ", Nazwisko: " + surname + ", Wiek: " + age + ", Adres: " + address.getFullAddress();
-    }
 }
