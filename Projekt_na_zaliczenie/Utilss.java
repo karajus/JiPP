@@ -12,24 +12,49 @@ public class Utilss {
         System.out.println(message.toUpperCase());
     }
 
+    public static void cancelingProgram(){
+        Utilss.print("Do Zobaczenia!");
+        System.exit(0);
+    }
+
+    public static void printMainOptions() {
+        Utilss.print("""
+                ========================================
+                Operacje:
+                0. Zakończ program
+                1. Wyświetl listę pracowników
+                2. Dodaj pracownika
+                3. Zwolnij pracownika
+                4. Zmień dane pracownika
+                5. Wyświetl pracowników danego działu
+                =========================================""");
+    }
+
+    public static void printEmployeeUpdateOptions(){
+        Utilss.print("""
+                Którą wartość zmienić?
+                1. Zmień Imię
+                2. Zmień Nazwisko
+                3. Zmień Adres
+                4. Zmień Department""");
+    }
+
     public static void displayEmployeeTable(List<Employee> employees) {
+
+        Utilss.print("Lista pracowników:");
         // Header labels
-        String[] headers = {"ID", "IMIĘ", "NAZWISKO", "DZIAŁ"};
+        String[] headers = {"ID", "IMIĘ", "NAZWISKO", "WIEK", "DZIAŁ"};
 
         // Sort employees alphabetically by surname
-        Collections.sort(employees, new Comparator<Employee>() {
-            @Override
-            public int compare(Employee e1, Employee e2) {
-                return e1.getPerson().getSurname().compareToIgnoreCase(e2.getPerson().getSurname());
-            }
-        });
+        employees.sort(Comparator.comparing(e -> e.getPerson().getSurname(), String.CASE_INSENSITIVE_ORDER));
 
         // Determine the maximum length for each column
         int[] columnWidths = new int[headers.length];
         columnWidths[0] = headers[0].length(); // ID
         columnWidths[1] = headers[1].length(); // Name
         columnWidths[2] = headers[2].length(); // Surname
-        columnWidths[3] = headers[3].length(); // Department
+        columnWidths[3] = headers[3].length(); // Age
+        columnWidths[4] = headers[4].length(); // Department
 
         // Calculate maximum width for each column based on data
         for (int i = 0; i < employees.size(); i++) {
@@ -37,31 +62,38 @@ public class Utilss {
             columnWidths[0] = Math.max(columnWidths[0], String.valueOf(i + 1).length()); // ID
             columnWidths[1] = Math.max(columnWidths[1], employee.getPerson().getName().length()); // Name
             columnWidths[2] = Math.max(columnWidths[2], employee.getPerson().getSurname().length()); // Surname
-            columnWidths[3] = Math.max(columnWidths[3], employee.getDepartment().getName().length()); // Department
+            columnWidths[3] = Math.max(columnWidths[3], (employee.getPerson().getAge() + " lat ").length()); // Age
+            columnWidths[4] = Math.max(columnWidths[4], employee.getDepartment().getName().length()); // Department
         }
 
-        // Create table border dynamically
-        StringBuilder border = new StringBuilder("+");
+        // Dynamic table generation
+        StringBuilder borderLine = new StringBuilder("+");
         for (int width : columnWidths) {
-            border.append("-".repeat(width + 2)).append("+"); // Add padding of 2 spaces for readability
+            borderLine.append("-".repeat(width + 2)).append("+"); // Flexible top and bottom border
         }
 
-        // Print the header
-        Utilss.print(String.valueOf(border));
-        System.out.printf("| %-"+columnWidths[0]+"s | %-"+columnWidths[1]+"s | %-"+columnWidths[2]+"s | %-"+columnWidths[3]+"s |\n",
-                headers[0], headers[1], headers[2], headers[3]);
-        Utilss.print(String.valueOf(border));
+        String border = borderLine.toString();
+        System.out.println(border);
 
-        // Print employee data
+        // Print header row with proper dynamic adjustments
+        System.out.printf("| %-" + columnWidths[0] + "s | %-" + columnWidths[1] + "s | %-" + columnWidths[2] + "s | %-" + columnWidths[3] + "s | %-" + columnWidths[4] + "s |\n",
+        headers[0], headers[1], headers[2], headers[3], headers[4]);
+        System.out.println(border);
+
+        // Print rows with dynamic formatting adjustments
         for (int i = 0; i < employees.size(); i++) {
             Employee employee = employees.get(i);
-            System.out.printf("| %-"+columnWidths[0]+"d | %-"+columnWidths[1]+"s | %-"+columnWidths[2]+"s | %-"+columnWidths[3]+"s |\n",
-                    i + 1,
-                    employee.getPerson().getName(),
-                    employee.getPerson().getSurname(),
-                    employee.getDepartment().getName());
+            System.out.printf("| %-" + columnWidths[0] + "d | %-" + columnWidths[1] + "s | %-" + columnWidths[2] + "s | %-" + columnWidths[3] + "s | %-" + columnWidths[4] + "s |\n",
+            i + 1,
+            employee.getPerson().getName(),
+            employee.getPerson().getSurname(),
+            employee.getPerson().getAge() + (employee.getPerson().getAge() % 10 == 2 ? " lata" : " lat"),
+            employee.getDepartment().getName());
         }
-        Utilss.print(String.valueOf(border));
+
+        System.out.println(border);
+
+
     }
 
 }

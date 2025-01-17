@@ -40,27 +40,24 @@ public class Person {
         return address;
     }
 
-    // Setter dla Address
+    //Settery
     public void setAddress(Address address) {
         this.address = address;
     }
 
-    // Setter dla Name
     public void setName(String name) {
         this.name = name;
     }
 
-    // Setter dla Surname z walidacją wieku
     public void setSurname(String surname) {
         this.surname = surname;
         System.out.println("Pomyślnie zmieniono nazwisko");
     }
 
-    // Setter dla Age
     public void setAge(int age) {
         this.age = age;
     }
-    // Metoda do wyświetlania pełnych danych osoby
+
     public String getFullInfo() {
         return "Imię: " + name + ", Nazwisko: " + surname + ", Wiek: " + age + ", Adres: " + address.getFullAddress();
     }

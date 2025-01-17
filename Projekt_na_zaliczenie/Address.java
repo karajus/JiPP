@@ -4,8 +4,6 @@ public class Address {
     private String city;
     private String street;
 
-
-
     // Konstruktor z parametrami
     public Address(String city, String street) {
         this.city = city;
@@ -43,7 +41,6 @@ public class Address {
         return displayStreet + ", " + displayCity;
     }
 
-    // Metoda zwracająca pełny adres
     public String getFullAddress() {
         return city + ", " + street;
     }
