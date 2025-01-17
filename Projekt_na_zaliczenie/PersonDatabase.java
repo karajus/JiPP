@@ -27,11 +27,11 @@ public class PersonDatabase {
     }
 
     // Metoda dodająca pracownika do bazy
-    private void addEmployee(String name, String surname, int age, String city, String street, Department department) {
-        Person person = new Person(name, surname, age);
-        Address address = new Address(city, street);
-        person.setAddress(address);
-        Employee employee = new Employee(person, department);
+private void addEmployee(String name, String surname, int age, String city, String street, Department department) {
+    Address address = new Address(city, street);
+    Person person = new Person(name, surname, age, address);
+    person.setAddress(address);
+    Employee employee = new Employee(person, department);
         employeeList.add(employee); // Dodajemy pracownika do listy
     }
 

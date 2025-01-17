@@ -31,12 +31,18 @@ public class Company {
     }
 
     // Dodanie pracownika
-    public void addEmployee(String name, String surname, int age) {
+    public void addEmployee(String name, String surname, int age, String city, String street) {
+        // Tworzymy obiekt Address
+        Address address = new Address(city, street);
 
-        Person person = new Person(name, surname, age);
+        // Tworzymy obiekt Person z przypisaniem adresu
+        Person person = new Person(name, surname, age, address);
+        person.setAddress(address); // Zakładamy, że klasa Person ma setter dla adresu
 
+        // Tworzymy obiekt Employee
         Employee employee = new Employee(person, null);
 
+        // Dodajemy do listy pracowników
         employees.add(employee);
     }
 }

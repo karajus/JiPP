@@ -3,28 +3,13 @@ package Projekt_na_zaliczenie;
 import java.util.*;
 
 public class Utilss {
-    static String input(String message) {
-        try {
-            Scanner scanner = new Scanner(System.in);
-            System.out.println(message);
-            return scanner.nextLine();
-        } catch (InputMismatchException e) {
-            System.out.println("Przoszę podać liczbę całkowitą");
-            return input(message);
-        }
-    }
-    static int inputInt(String message) {
-        try {
-            Scanner scanner = new Scanner(System.in);
-            System.out.println(message);
-            return scanner.nextInt();
-        } catch (InputMismatchException e) {
-            System.out.println("Przoszę podać liczbę całkowitą");
-            return inputInt(message);
-        }
-    }
-    static void print(String message) {
+
+    public static void print(String message) {
         System.out.println(message);
+    }
+
+    public static void printUpper(String message) {
+        System.out.println(message.toUpperCase());
     }
 
     public static void displayEmployeeTable(List<Employee> employees) {
@@ -62,10 +47,10 @@ public class Utilss {
         }
 
         // Print the header
-        System.out.println(border);
+        Utilss.print(String.valueOf(border));
         System.out.printf("| %-"+columnWidths[0]+"s | %-"+columnWidths[1]+"s | %-"+columnWidths[2]+"s | %-"+columnWidths[3]+"s |\n",
                 headers[0], headers[1], headers[2], headers[3]);
-        System.out.println(border);
+        Utilss.print(String.valueOf(border));
 
         // Print employee data
         for (int i = 0; i < employees.size(); i++) {
@@ -76,7 +61,7 @@ public class Utilss {
                     employee.getPerson().getSurname(),
                     employee.getDepartment().getName());
         }
-        System.out.println(border);
+        Utilss.print(String.valueOf(border));
     }
 
 }

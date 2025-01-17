@@ -1,6 +1,6 @@
 package Projekt_na_zaliczenie;
 
-class Address {
+public class Address {
     private String city;
     private String street;
 

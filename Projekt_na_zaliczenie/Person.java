@@ -1,27 +1,18 @@
 package Projekt_na_zaliczenie;
 
-class Person {
+public class Person {
     private String name;
     private String surname;
     private int age;
     private Address address;
 
     // Konstruktor z parametrami
-    public Person(String name, String surname, int age) {
+    public Person(String name, String surname, int age, Address address) {
         this.name = name;
         this.surname = surname;
         this.age = age;
-        this.address = null; // Można ustawić null, jeśli nie ma adresu
+        this.address = address;
     }
-
-    // Konstruktor domyślny
-    public Person() {
-        this.name = "name";
-        this.surname = "surname";
-        this.age = 18;
-        this.address = null; // Można też ustawić null dla address
-    }
-
 
     // Gettery
     public String getName() {
@@ -61,12 +52,8 @@ class Person {
 
     // Setter dla Surname z walidacją wieku
     public void setSurname(String surname) {
-        if (this.age < 18) {
-            System.out.println("Nie można zmienić nazwiska - osoba nieletnia");
-        } else {
-            this.surname = surname;
-            System.out.println("Pomyślnie zmieniono nazwisko");
-        }
+        this.surname = surname;
+        System.out.println("Pomyślnie zmieniono nazwisko");
     }
 
     // Setter dla Age
