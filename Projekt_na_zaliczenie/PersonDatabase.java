@@ -5,11 +5,11 @@ import java.util.List;
 
 public class PersonDatabase {
 
-    private List<Employee> employeeList; // Zmieniamy listę na Employee
+    private List<Employee> employeeList;
 
     public PersonDatabase() {
         employeeList = new ArrayList<>();
-        loadPeopleData();  // Automatyczne ładowanie danych osób
+        loadPeopleData();
     }
 
     private void loadPeopleData() {
@@ -31,7 +31,7 @@ public void addEmployee(String name, String surname, int age, String city, Strin
     Person person = new Person(name, surname, age, address);
     person.setAddress(address);
     Employee employee = new Employee(person, department);
-        employeeList.add(employee); // Dodajemy pracownika do listy
+        employeeList.add(employee);
     }
 
     public List<Employee> getEmployeeList() {

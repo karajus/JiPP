@@ -1,5 +1,4 @@
 package Projekt_na_zaliczenie;
-
 import java.util.Scanner;
 
 public class Main {
@@ -12,7 +11,7 @@ public class Main {
         while (true) {
             Utilss.printMainOptions();
             int number = Utilss.getValidIntInput(input, 0, 5);
-            input.nextLine(); // eliminacja błędu powtórzeń
+            input.nextLine(); //walidate duplication error
 
             switch (number) {
                 case 0:

@@ -91,7 +91,6 @@ public class Employee extends Person{
                 break;
 
             case 2:
-                // Zmieniamy nazwisko, ale jeśli osoba jest nieletnia, nie wykonujemy tej operacji
                 if (updatingEmployee.getAge() < 18) {
                     Utilss.printUpper("Nie można zmienić nazwiska - osoba nieletnia!");
                     break;  // Zatrzymanie dalszej zmiany
@@ -129,7 +128,7 @@ public class Employee extends Person{
         int indexToUpdate = Utilss.getValidIntInput(input) - 1;
 
         if (indexToUpdate == -1) {
-            return null; // Powrót do głównego menu
+            return null;
         }
 
         if (indexToUpdate >= 0 && indexToUpdate < company.getEmployees().size()) {
