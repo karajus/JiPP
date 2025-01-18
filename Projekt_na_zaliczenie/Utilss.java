@@ -71,12 +71,13 @@ public class Utilss {
                 3. Zwolnij pracownika
                 4. Zmień dane pracownika
                 5. Wyświetl pracowników danego działu
-                =========================================""");
+                =========================================
+                (Podaj numer operacji)""");
     }
 
     public static void printEmployeeUpdateOptions(){
         Utilss.print("""
-                Którą wartość zmienić?
+                Którą wartość zmienić? (Podaj numer operacji)
                 1. Zmień Imię
                 2. Zmień Nazwisko
                 3. Zmień Adres
